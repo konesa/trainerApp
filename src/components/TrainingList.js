@@ -4,6 +4,13 @@ import DownloadIcon from '@mui/icons-material/Download';
 import SearchIcon from '@mui/icons-material/Search';
 import dayjs from 'dayjs';
 import DeleteIcon from '@mui/icons-material/Delete';
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import FastForwardIcon from '@mui/icons-material/FastForward';
+import FastRewindIcon from '@mui/icons-material/FastRewind';
+import ClearIcon from '@mui/icons-material/Clear';
+import DoneIcon from '@mui/icons-material/Done';
 
 export default function TrainingList() {
 
@@ -27,17 +34,44 @@ export default function TrainingList() {
             })
     }
 
+    /*============================================== Deletes the training =============================================================*/
+
+
+    function deleteConfirm(prop) {
+        const confirmBox = window.confirm(
+            "Do you really want to delete this training?"
+        )
+
+        if (confirmBox === true) {
+            fetch("https://customerrest.herokuapp.com/api/trainings/" + prop.id, {
+                method: "DELETE"
+            })
+                .then(response => {
+                    if (!response.ok)
+                        throw new Error(response.statusText)
+                    return response
+                })
+                .then(setIsLoaded(false))
+        }
+    }
+
+    /*================================================== Component return ===========================================================*/
+
     return (
         <div style={{ maxWidth: '100%' }}>
             <MaterialTable
-             actions={[
-                {
-                    icon: DeleteIcon,
-                    tooltip: 'Delete user',
-                    onClick: (event, rowData) => {
-                    }
-                }]}
-                icons={{ Filter: () => <div />, Export: DownloadIcon, Search: SearchIcon }}
+                actions={[
+                    {
+                        icon: DeleteIcon,
+                        tooltip: 'Delete training',
+                        onClick: (event, rowData) => {
+                            deleteConfirm(rowData)
+                        }
+                    }]}
+                icons={{
+                    Filter: () => <div />, Export: DownloadIcon, Search: SearchIcon, SortArrow: ArrowDownwardIcon, NextPage: ArrowForwardIcon,
+                    PreviousPage: ArrowBackIcon, LastPage: FastForwardIcon, FirstPage: FastRewindIcon, Clear:ClearIcon, Check:DoneIcon
+                }}
                 options={{
                     filtering: true,
                     exportButton: true,
