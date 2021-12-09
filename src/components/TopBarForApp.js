@@ -6,6 +6,8 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import CustomerList from './CustomerList';
 import TrainingList from './TrainingList'
+import AddCustomer from './AddCustomer';
+import Button from '@mui/material/Button';
 
 /*============================ ORIGINALLY THIS CODE HAS BEEN COPIED FROM https://mui.com/components/tabs/ ======================*/
 /*============================ NOT COMPLETELY MY OWN ORIGINAL WORK, BUT I MODIFIED PARTS OF IT  ================================*/
@@ -45,11 +47,13 @@ export default function TopBarForApps() {
   };
 
   return (
+    <div>
     <Box sx={{ width: '100%'}}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs value={value} onChange={handleChange}>
           <Tab label="Customers" {...CustomerList} />
           <Tab label="Trainings" {...TrainingList} />
+          <Button>Add customer</Button>
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
@@ -58,6 +62,10 @@ export default function TopBarForApps() {
       <TabPanel value={value} index={1}>
         <TrainingList />    
       </TabPanel>
+      <TabPanel value={value} index={2}>
+        <AddCustomer />
+      </TabPanel>
     </Box>
+    </div>
   );
 }

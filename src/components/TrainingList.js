@@ -75,7 +75,7 @@ export default function TrainingList() {
                 options={{
                     filtering: true,
                     exportButton: true,
-                    tableLayout: 'fixed'
+                    tableLayout: 'auto'
                 }}
                 columns={[
                     {

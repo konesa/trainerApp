@@ -3,8 +3,11 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
+import { FormControl, TextField } from '@mui/material';
+import { textAlign } from '@mui/system';
 
 export default function AddCustomer() {
+
     const style = {
         position: 'absolute',
         top: '50%',
@@ -38,8 +41,7 @@ export default function AddCustomer() {
     const postcodechanged = (event) => { setpostcode(event.target.value); }
     const citychanged = (event) => { setcity(event.target.value); }
 
-    const handleSubmit = event => {
-        event.preventDefault();
+    const handleSubmit = () => {
         const data = {
             firstname: firstname,
             lastname: lastname,
@@ -58,12 +60,18 @@ export default function AddCustomer() {
             .then(response => {
                 console.log(data);
                 if (!response.ok) {
+                    alert("User registration failed!")
                     throw new Error(response.statusText)
                 } else {
                     alert('New user created!')
                     window.location.replace("/customers");
                 }
             })
+    }
+
+    const handleClick = () => {
+        handleSubmit();
+        handleClose();
     }
 
     return (
@@ -80,42 +88,69 @@ export default function AddCustomer() {
                         Add a customer
                     </Typography>
                     <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                        <div className="form-area">
-                            <form onSubmit={handleSubmit}>
-                                <h1>Add customer</h1>
-                                <div>
-                                    <label for="firstname">First name:</label>
-                                    <input id="firstname" type="text" onChange={firstnamechanged} value={firstname} />
-                                </div>
-                                <div>
-                                    <label for="lastname">Last name:</label>
-                                    <input id="lastname" type="text" onChange={lastnamechanged} value={lastname} />
-                                </div>
-                                <div>
-                                    <label for="streetaddress">Street address:</label>
-                                    <input id="streetaddress" type="text" onChange={streetaddresschanged} value={streetaddress} />
-                                </div>
-                                <div>
-                                    <label for="postcode">Postcode:</label>
-                                    <input id="postcode" type="number" onChange={postcodechanged} value={postcode} />
-                                </div>
-                                <div>
-                                    <label for="city">City:</label>
-                                    <input id="city" type="text" onChange={citychanged} value={city} />
-                                </div>
-                                <div>
-                                    <label for="email">Email:</label>
-                                    <input id="email" type="text" onChange={emailchanged} value={email} />
-                                </div>
-                                <div>
-                                    <label for="phone">Phone number:</label>
-                                    <input id="phone" type="text" onChange={phonechanged} value={phone} />
-                                </div>
-                                <div>
-                                    <input type="submit" value="Register customer"></input>
-                                </div>
-                            </form>
-                        </div>
+                        <Box
+                            component="form"
+                            sx={{
+                                '& .MuiTextField-root': { m: 1, width: '25ch' },
+                            }}
+                            noValidate
+                            autoComplete="off"
+                        >
+                            <FormControl>
+                            <TextField
+                                required
+                                id="firstname"
+                                label="First name"
+                                defaultValue=""
+                                variant="standard"
+                                onChange={firstnamechanged}
+                            />
+                            <TextField
+                                required
+                                id="lastname"
+                                label="Last name"
+                                variant="standard"
+                                onChange={lastnamechanged}
+                            />
+                            <TextField
+                                required
+                                id="email"
+                                label="Email"
+                                variant="standard"
+                                onChange={emailchanged}
+                            />
+                            <TextField
+                                required
+                                id="phonenumber"
+                                label="Phone"
+                                variant="standard"
+                                onChange={phonechanged}
+                            />
+                            <TextField
+                                required
+                                id="streetaddress"
+                                label="Address"
+                                variant="standard"
+                                onChange={streetaddresschanged}
+                            />
+                            <TextField
+                                required
+                                id="postcode"
+                                label="Postcode"
+                                variant="standard"
+                                onChange={postcodechanged}
+                            />
+                            <TextField
+                                required
+                                id="city"
+                                label="City"
+                                variant="standard"
+                                onChange={citychanged}
+                            />
+                            <br/>
+                            <Button onClick={handleClick}>Submit</Button>
+                            </FormControl>
+                        </Box>
                     </Typography>
                 </Box>
             </Modal>
