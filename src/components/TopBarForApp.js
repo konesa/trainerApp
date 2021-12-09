@@ -48,6 +48,7 @@ export default function TopBarForApps() {
     setValue(newValue);
   };
 
+/*============================================ Customer add function ========================================*/
   const style = {
     position: 'absolute',
     top: '50%',
@@ -114,7 +115,7 @@ export default function TopBarForApps() {
     handleClose();
   }
 
-
+/*============================================== The component ==========================================*/
   return (
     <div>
       <div>
@@ -209,7 +210,10 @@ export default function TopBarForApps() {
                     onChange={citychanged}
                   />
                   <br />
-                  <Button onClick={handleClick}>Submit</Button>
+                  <div style = {{'text-align':"center"}}>
+                  <Button style = {{'color':"green"}} onClick={handleClick}>Submit</Button>
+                  <Button style = {{'color':"red"}} onClick={() => setOpen(false)}>Close</Button>
+                  </div>
                 </FormControl>
               </Box>
             </Typography>
