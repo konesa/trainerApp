@@ -15,9 +15,10 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import { FormControl, TextField } from '@mui/material';
+import { TextField } from '@mui/material';
 import { Stack } from '@mui/material';
 import moment from 'moment';
+import ModeEditIcon from '@mui/icons-material/ModeEdit';
 
 export default function CustomerList() {
 
@@ -39,8 +40,8 @@ export default function CustomerList() {
     const activityChanged = (event) => { setactivity(event.target.value); }
     const durationChanged = (event) => { setDuration(event.target.value); }
 
-/*============================================== Modal styling ====================================================*/
-/*================================================= NOT MY OWN WORK ==============================================*/
+    /*============================================== Modal styling ====================================================*/
+    /*================================================= NOT MY OWN WORK ==============================================*/
 
     const style = {
         position: 'absolute',
@@ -53,6 +54,8 @@ export default function CustomerList() {
         boxShadow: 24,
         p: 4,
     };
+
+    /*============================================ Add training function =============================================*/
 
     const handleSubmit = () => {
         var dateString = date + " " + time;
@@ -78,7 +81,6 @@ export default function CustomerList() {
                     throw new Error(response.statusText)
                 } else {
                     alert('New training added!')
-                    setIsLoaded(false)
                 }
             })
     }
@@ -133,20 +135,37 @@ export default function CustomerList() {
         }
     }
 
+    /*================================================= Edit row data (userdata) ================================================*/
+
+    const updateData = (rowData) => {
+    }
+
+
     /*=============================================== Component return===============================================================*/
 
     return (
-        <div style={{ maxWidth: '90%' }}>
+        <div style={{ maxWidth: '100%' }}>
             <MaterialTable
-                cellEditable={{
-                    cellStyle: {},
-                    onCellEditApproved: (newValue, oldValue, rowData, columnDef) => {
-                        return new Promise((resolve, reject) => {
-                            console.log('newValue: ' + newValue);
-                            setTimeout(resolve, 4000);
-                        });
-                    }
-                }}
+                editable={{
+                    onRowUpdate: (rowData) =>
+                        new Promise((resolve, reject) => {
+                            setTimeout(() => {
+                                fetch(rowData.links[0].href, {
+                                    method: "PUT",
+                                    headers: { 'Content-Type': 'application/json' },
+                                    body: JSON.stringify(rowData)
+                                })
+                                    .then(response => {
+                                        if (!response.ok)
+                                            throw new Error(response.statusText)
+                                        return response
+                                    })
+                                    .then(setIsLoaded(false))
+                                    .then(resolve())
+                            }, 500);
+                        })
+                }
+                }
                 actions={[
                     {
                         icon: DeleteIcon,
@@ -167,7 +186,8 @@ export default function CustomerList() {
 
                 icons={{
                     Filter: () => <div />, Export: DownloadIcon, Search: SearchIcon, SortArrow: ArrowDownwardIcon, NextPage: ArrowForwardIcon,
-                    PreviousPage: ArrowBackIcon, LastPage: FastForwardIcon, FirstPage: FastRewindIcon, Clear: ClearIcon, Check: DoneIcon
+                    PreviousPage: ArrowBackIcon, LastPage: FastForwardIcon, FirstPage: FastRewindIcon, Clear: ClearIcon,
+                    Check: DoneIcon, Edit: ModeEditIcon
                 }}
                 options={{
                     filtering: true,
@@ -272,12 +292,13 @@ export default function CustomerList() {
                                         onChange={durationChanged}
                                     />
                                 </Stack>
-                                <Button onClick={handleClick}>Add training</Button>
+                                <Button style={{ 'color': "green" }} onClick={handleClick}>Submit</Button>
+                                <Button style={{ 'color': "red" }} onClick={() => setOpen(false)}>Close</Button>
                             </Box>
                         </Typography>
                     </Box>
                 </Modal>
             </div>
         </div>
-    )
+    );
 }

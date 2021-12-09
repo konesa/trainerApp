@@ -140,7 +140,6 @@ export default function TopBarForApps() {
         </Box>
       </div>
       <div>
-        <Button onClick={handleOpen}>Add customer</Button>
         <Modal
           open={open}
           onClose={handleClose}
