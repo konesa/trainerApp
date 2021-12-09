@@ -49,6 +49,8 @@ export default function TopBarForApps() {
   };
 
 /*============================================ Customer add function ========================================*/
+/*============================================== Modal styling is not my owiginial work ===============================*/
+
   const style = {
     position: 'absolute',
     top: '50%',

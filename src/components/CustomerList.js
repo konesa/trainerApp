@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import MaterialTable from 'material-table';
 import DownloadIcon from '@mui/icons-material/Download';
 import SearchIcon from '@mui/icons-material/Search';
-import AddCustomer from './AddCustomer';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
@@ -40,6 +39,9 @@ export default function CustomerList() {
     const activityChanged = (event) => { setactivity(event.target.value); }
     const durationChanged = (event) => { setDuration(event.target.value); }
 
+/*============================================== Modal styling ====================================================*/
+/*================================================= NOT MY OWN WORK ==============================================*/
+
     const style = {
         position: 'absolute',
         top: '50%',
@@ -75,7 +77,7 @@ export default function CustomerList() {
                     alert("Adding training failed!")
                     throw new Error(response.statusText)
                 } else {
-                    alert('New training created!')
+                    alert('New training added!')
                     setIsLoaded(false)
                 }
             })
