@@ -17,7 +17,6 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { TextField } from '@mui/material';
 import { Stack } from '@mui/material';
-import moment from 'moment';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 
 export default function CustomerList() {
