@@ -10,6 +10,7 @@ import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 import { FormControl, TextField } from '@mui/material';
 import { useState } from 'react'
+import Calendar from './Calendar';
 
 /*============================ ORIGINALLY THIS CODE HAS BEEN COPIED FROM https://mui.com/components/tabs/ ======================*/
 /*============================ NOT COMPLETELY MY OWN ORIGINAL WORK, BUT I MODIFIED PARTS OF IT  ================================*/
@@ -48,8 +49,8 @@ export default function TopBarForApps() {
     setValue(newValue);
   };
 
-/*============================================ Customer add function ========================================*/
-/*============================================== Modal styling is not my owiginial work ===============================*/
+  /*============================================ Customer add function ========================================*/
+  /*============================================== Modal styling is not my owiginial work ===============================*/
 
   const style = {
     position: 'absolute',
@@ -117,7 +118,7 @@ export default function TopBarForApps() {
     handleClose();
   }
 
-/*============================================== The component ==========================================*/
+  /*============================================== The component ==========================================*/
   return (
     <div>
       <div>
@@ -126,7 +127,8 @@ export default function TopBarForApps() {
             <Tabs value={value} onChange={handleChange}>
               <Tab label="Customers" {...CustomerList} />
               <Tab label="Trainings" {...TrainingList} />
-              <Button onClick={() => setOpen(true)}>Add customer</Button>
+              <Tab label="Calendar" {...Calendar} />
+              <Button onClick={() => handleOpen(true)}>Add customer</Button>
             </Tabs>
           </Box>
           <TabPanel value={value} index={0}>
@@ -136,6 +138,9 @@ export default function TopBarForApps() {
             <TrainingList />
           </TabPanel>
           <TabPanel value={value} index={2}>
+          </TabPanel>
+          <TabPanel value={value} index={3}>
+            <Calendar />
           </TabPanel>
         </Box>
       </div>
@@ -211,9 +216,9 @@ export default function TopBarForApps() {
                     onChange={citychanged}
                   />
                   <br />
-                  <div style = {{'text-align':"center"}}>
-                  <Button style = {{'color':"green"}} onClick={handleClick}>Submit</Button>
-                  <Button style = {{'color':"red"}} onClick={() => setOpen(false)}>Close</Button>
+                  <div style={{ 'text-align': "center" }}>
+                    <Button style={{ 'color': "green" }} onClick={handleClick}>Submit</Button>
+                    <Button style={{ 'color': "red" }} onClick={() => setOpen(false)}>Close</Button>
                   </div>
                 </FormControl>
               </Box>

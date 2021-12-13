@@ -58,16 +58,14 @@ export default function CustomerList() {
     /*============================================ Add training function =============================================*/
 
     const handleSubmit = () => {
-        var dateString = date + " " + time;
-        const dateObj = new Date(dateString)
-        dateString = moment().toISOString(dateString);
-        console.log(dateString)
+        var dateString = date + "T" + time + ":00";
         const data = {
-            date: date,
+            date: dateString,
             activity: activity,
             duration: duration,
             customer: customer
         }
+        console.log(dateString)
 
         fetch('https://customerrest.herokuapp.com/api/trainings', {
             method: 'POST',
@@ -249,7 +247,6 @@ export default function CustomerList() {
                                         id="time"
                                         label="Time"
                                         type="time"
-                                        defaultValue="07:30"
                                         InputLabelProps={{
                                             shrink: true,
                                         }}

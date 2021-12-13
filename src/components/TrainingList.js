@@ -79,8 +79,8 @@ export default function TrainingList() {
                 }}
                 columns={[
                     {
-                        title: "Time", field: "date",
-                        render: rowData => dayjs(rowData.value).format('DD MMM YYYY HH:MM')
+                        title: "Date", field: "date", type: 'date',
+                        render: rowData => dayjs(rowData.date).format('DD MMM YYYY HH:MM')
                     },
                     {
                         title: "Activity", field: "activity"
