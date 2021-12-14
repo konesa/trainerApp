@@ -30,7 +30,6 @@ export default function TrainingList() {
             .then(data => {
                 setTrainings(data)
                 setIsLoaded(true)
-                console.log(data)
             })
     }
 
@@ -70,7 +69,7 @@ export default function TrainingList() {
                     }]}
                 icons={{
                     Filter: () => <div />, Export: DownloadIcon, Search: SearchIcon, SortArrow: ArrowDownwardIcon, NextPage: ArrowForwardIcon,
-                    PreviousPage: ArrowBackIcon, LastPage: FastForwardIcon, FirstPage: FastRewindIcon, Clear:ClearIcon, Check:DoneIcon
+                    PreviousPage: ArrowBackIcon, LastPage: FastForwardIcon, FirstPage: FastRewindIcon, Clear: ClearIcon, Check: DoneIcon
                 }}
                 options={{
                     filtering: true,

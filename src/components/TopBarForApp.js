@@ -10,7 +10,7 @@ import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 import { FormControl, TextField } from '@mui/material';
 import { useState } from 'react'
-import Calendar from './Calendar';
+import Stats from './Stats';
 
 /*============================ ORIGINALLY THIS CODE HAS BEEN COPIED FROM https://mui.com/components/tabs/ ======================*/
 /*============================ NOT COMPLETELY MY OWN ORIGINAL WORK, BUT I MODIFIED PARTS OF IT  ================================*/
@@ -85,13 +85,19 @@ export default function TopBarForApps() {
   const postcodechanged = (event) => { setpostcode(event.target.value); }
   const citychanged = (event) => { setcity(event.target.value); }
 
+  function capitalFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+
+  /*=============================== Post the data to the server ==============================================*/ 
+
   const handleSubmit = () => {
     const data = {
-      firstname: firstname,
-      lastname: lastname,
+      firstname: capitalFirstLetter(firstname),
+      lastname: capitalFirstLetter(lastname),
       streetaddress: streetaddress,
       postcode: postcode,
-      city: city,
+      city: capitalFirstLetter(city),
       email: email,
       phone: phone
     }
@@ -102,13 +108,12 @@ export default function TopBarForApps() {
       body: JSON.stringify(data)
     })
       .then(response => {
-        console.log(data);
         if (!response.ok) {
           alert("User registration failed!")
           throw new Error(response.statusText)
         } else {
           alert('New user created!')
-          window.location.replace("/");
+          window.location.reload();
         }
       })
   }
@@ -127,7 +132,7 @@ export default function TopBarForApps() {
             <Tabs value={value} onChange={handleChange}>
               <Tab label="Customers" {...CustomerList} />
               <Tab label="Trainings" {...TrainingList} />
-              <Tab label="Calendar" {...Calendar} />
+              <Tab label="Stats" {...Stats} />
               <Button onClick={() => handleOpen(true)}>Add customer</Button>
             </Tabs>
           </Box>
@@ -138,9 +143,9 @@ export default function TopBarForApps() {
             <TrainingList />
           </TabPanel>
           <TabPanel value={value} index={2}>
+            <Stats />
           </TabPanel>
           <TabPanel value={value} index={3}>
-            <Calendar />
           </TabPanel>
         </Box>
       </div>
@@ -153,7 +158,7 @@ export default function TopBarForApps() {
         >
           <Box sx={style}>
             <Typography id="modal-modal-title" variant="h6" component="h2">
-              Add a customer
+              Add customer
             </Typography>
             <Typography id="modal-modal-description" sx={{ mt: 2 }}>
               <Box

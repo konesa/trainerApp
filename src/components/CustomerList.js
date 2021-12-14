@@ -55,16 +55,19 @@ export default function CustomerList() {
     };
 
     /*============================================ Add training function =============================================*/
+    
+    function capitalFirstLetter(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    }
 
     const handleSubmit = () => {
-        var dateString = date + "T" + time + ":00";
+        var dateString = date + "T" + time + ":00.000Z";
         const data = {
             date: dateString,
-            activity: activity,
+            activity: capitalFirstLetter(activity),
             duration: duration,
             customer: customer
         }
-        console.log(dateString)
 
         fetch('https://customerrest.herokuapp.com/api/trainings', {
             method: 'POST',
@@ -72,7 +75,6 @@ export default function CustomerList() {
             body: JSON.stringify(data)
         })
             .then(response => {
-                console.log(data);
                 if (!response.ok) {
                     alert("Adding training failed!")
                     throw new Error(response.statusText)
@@ -80,6 +82,7 @@ export default function CustomerList() {
                     alert('New training added!')
                 }
             })
+        setCustomer('')
     }
 
 
@@ -87,11 +90,6 @@ export default function CustomerList() {
         handleSubmit();
         handleClose();
     }
-
-    console.log(time)
-    console.log(date)
-
-
 
     /*================================ Used to fetch the data =======================================================================*/
 
@@ -106,20 +104,16 @@ export default function CustomerList() {
             .then(data => {
                 setCustomers(data.content)
                 setIsLoaded(true)
-                console.log(data.content)
             })
     }
 
     /*============================================ Deletes the user ===============================================================*/
 
-
     const deleteConfirm = (prop) => {
-        console.log(prop)
         const confirmBox = window.confirm(
             "Do you really want to delete this user?"
         )
         if (confirmBox) {
-            console.log(prop)
             fetch(prop.links[0].href, {
                 method: "DELETE"
             })
@@ -169,7 +163,7 @@ export default function CustomerList() {
                         icon: AddIcon,
                         tooltip: 'Add training',
                         onClick: (event, rowData) => {
-                            setOpen(true);
+                            handleOpen();
                             setCustomer(rowData.links[0].href)
                         }
                     }
@@ -283,7 +277,7 @@ export default function CustomerList() {
                                     />
                                 </Stack>
                                 <Button style={{ 'color': "green" }} onClick={handleClick}>Submit</Button>
-                                <Button style={{ 'color': "red" }} onClick={() => setOpen(false)}>Close</Button>
+                                <Button style={{ 'color': "red" }} onClick={() => handleClose()}>Close</Button>
                             </Box>
                         </Typography>
                     </Box>
